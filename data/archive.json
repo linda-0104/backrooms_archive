@@ -1,0 +1,15 @@
+{
+  "levels": [
+    {"id":"level-0","name":"The Lobby","class":"Class 1","risk":"Low","description":"Endless yellow rooms, humming lights, and damp carpet."},
+    {"id":"level-1","name":"The Habitable Zone","class":"Class 2","risk":"Moderate","description":"A sprawling warehouse with supplies and unstable geometry."},
+    {"id":"level-37","name":"Sublimity","class":"Class 3","risk":"High","description":"A vast pool complex where something watches from below."}
+  ],
+  "entities": [
+    {"id":"entity-3","name":"The Hound","threat":"High","description":"A fast, hostile entity that imitates human movement."},
+    {"id":"entity-8","name":"The Smiler","threat":"Critical","description":"A face visible only in darkness."}
+  ],
+  "documents": [
+    {"id":"doc-001","title":"Field Note 001: Entry","classification":"Archive","excerpt":"If you find this, you have already left the world you knew."},
+    {"id":"doc-002","title":"Incident Report: Yellow Hall","classification":"Restricted","excerpt":"The lights went out for eleven seconds. When they returned, the corridor had changed."}
+  ]
+}
