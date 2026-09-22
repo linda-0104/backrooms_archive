@@ -1,12 +1,22 @@
 # Backrooms Archive
 
-This project uses **JavaScript**, not Java. Express is the backend; the pages in `public/` are regular HTML files and `styles.css` controls the design.
+A small full-stack starter for the Backrooms Archive: Express serves the HTML/CSS frontend and a JSON API for levels, entities, and documents.
 
-Run in VS Code terminal:
+## Run locally
 
 ```bash
 npm install
 npm start
 ```
 
-Then open http://localhost:3000.
+Open `http://localhost:3000`.
+
+## API
+
+- `GET /api/health`
+- `GET /api/archive`
+- `GET /api/levels?q=yellow`
+- `GET /api/entities/:id`
+- `GET /api/documents/:id`
+
+Edit `data/archive.json` to add or update archive records.

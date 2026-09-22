@@ -1,8 +1,72 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Backrooms Archive</title><link rel="stylesheet" href="styles.css"></head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A classified archive of the Backrooms." />
+  <title>BACKROOMS // ARCHIVE</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
 <body>
-<header><a href="index.html" class="logo">BACKROOMS // ARCHIVE</a><nav><a href="levels.html">Levels</a><a href="entities.html">Entities</a><a href="documents.html">Documents</a></nav></header>
-<main class="hero"><p class="eyebrow">UNIFIED EXPLORATION DATABASE</p><h1>THE ARCHIVE</h1><p>A living record of the places, entities, and fragments found beyond the threshold.</p><div class="links"><a class="button" href="levels.html">Explore levels →</a><a class="button secondary" href="documents.html">Read documents →</a></div></main>
-<footer>BACKROOMS ARCHIVE · HANDLE WITH CAUTION</footer>
-</body></html>
+  <div class="scanlines"></div>
+  <header class="topbar">
+    <a class="brand" href="/">BACKROOMS<span>//</span>ARCHIVE</a>
+    <div class="system-status"><i></i> SYSTEM ONLINE</div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <p class="eyebrow">DATABASE NAVIGATION</p>
+      <nav>
+        <button class="nav-item active" data-view="levels">LEVELS <b id="levels-count">--</b></button>
+        <button class="nav-item" data-view="entities">ENTITIES <b id="entities-count">--</b></button>
+        <button class="nav-item" data-view="documents">DOCUMENTS <b id="documents-count">--</b></button>
+      </nav>
+      <div class="warning">ACCESS LEVEL: <strong>FIELD AGENT</strong><br />Some records may be incomplete.</div>
+    </aside>
+
+    <section class="content">
+      <div class="hero">
+        <p class="eyebrow">UNIFIED EXPLORATION DATABASE // 00.001</p>
+        <h1>THE ARCHIVE</h1>
+        <p class="intro">A living record of the places, entities, and fragments found beyond the threshold.</p>
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Search the archive..." /></label>
+      </div>
+      <div class="section-heading"><div><p class="eyebrow" id="section-label">LEVEL INDEX</p><h2 id="section-title">Known Levels</h2></div><span id="result-count">Loading...</span></div>
+      <div id="cards" class="cards"><div class="loading">CONNECTING TO ARCHIVE...</div></div>
+    </section>
+  </main>
+  <footer>BACKROOMS ARCHIVE <span>·</span> HANDLE WITH CAUTION <span>·</span> <span id="year"></span></footer>
+  <script>
+    const state = { view: 'levels', data: {}, query: '' };
+    const labels = { levels: ['LEVEL INDEX', 'Known Levels'], entities: ['ENTITY REGISTER', 'Known Entities'], documents: ['DOCUMENT LOG', 'Classified Documents'] };
+    const cards = document.querySelector('#cards');
+    const esc = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#039;' }[char]));
+
+    async function load() {
+      const response = await fetch('/api/archive');
+      state.data = await response.json();
+      for (const key of Object.keys(state.data)) document.querySelector(`#${key}-count`).textContent = state.data[key].length;
+      render();
+    }
+    function render() {
+      const [label, title] = labels[state.view];
+      document.querySelector('#section-label').textContent = label;
+      document.querySelector('#section-title').textContent = title;
+      const query = state.query.toLowerCase();
+      const items = (state.data[state.view] || []).filter((item) => JSON.stringify(item).toLowerCase().includes(query));
+      document.querySelector('#result-count').textContent = `${items.length} RECORD${items.length === 1 ? '' : 'S'}`;
+      cards.innerHTML = items.length ? items.map(card).join('') : '<div class="empty">NO RECORDS MATCH YOUR SEARCH.</div>';
+    }
+    function card(item) {
+      if (state.view === 'levels') return `<article class="card"><div class="card-top"><span class="tag">${esc(item.id)}</span><span class="risk ${item.risk.toLowerCase()}">${esc(item.risk)}</span></div><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p><div class="meta"><span>${esc(item.class)}</span><span>${esc(item.status)}</span></div></article>`;
+      if (state.view === 'entities') return `<article class="card entity"><div class="card-top"><span class="tag">${esc(item.id)}</span><span class="risk ${item.threat.toLowerCase()}">${esc(item.threat)}</span></div><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p><div class="advice">FIELD ADVICE: ${esc(item.advice)}</div></article>`;
+      return `<article class="card document"><div class="card-top"><span class="tag">${esc(item.id)}</span><span class="tag">${esc(item.classification)}</span></div><h3>${esc(item.title)}</h3><p>“${esc(item.excerpt)}”</p></article>`;
+    }
+    document.querySelectorAll('.nav-item').forEach((button) => button.addEventListener('click', () => { document.querySelector('.nav-item.active').classList.remove('active'); button.classList.add('active'); state.view = button.dataset.view; state.query = ''; document.querySelector('#search').value = ''; render(); }));
+    document.querySelector('#search').addEventListener('input', (event) => { state.query = event.target.value; render(); });
+    document.querySelector('#year').textContent = new Date().getFullYear();
+    load().catch(() => { cards.innerHTML = '<div class="empty">ARCHIVE CONNECTION FAILED.</div>'; });
+  </script>
+</body>
+</html>

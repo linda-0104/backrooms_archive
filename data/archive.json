@@ -1,15 +1,58 @@
 {
   "levels": [
-    {"id":"level-0","name":"The Lobby","class":"Class 1","risk":"Low","description":"Endless yellow rooms, humming lights, and damp carpet."},
-    {"id":"level-1","name":"The Habitable Zone","class":"Class 2","risk":"Moderate","description":"A sprawling warehouse with supplies and unstable geometry."},
-    {"id":"level-37","name":"Sublimity","class":"Class 3","risk":"High","description":"A vast pool complex where something watches from below."}
+    {
+      "id": "level-0",
+      "name": "The Lobby",
+      "class": "Class 1",
+      "risk": "Low",
+      "description": "Endless yellow rooms, humming lights, and damp carpet. The first place most wanderers remember.",
+      "status": "Explored"
+    },
+    {
+      "id": "level-1",
+      "name": "The Habitable Zone",
+      "class": "Class 2",
+      "risk": "Moderate",
+      "description": "A sprawling warehouse with supplies, isolated outposts, and unstable geometry.",
+      "status": "Mapped"
+    },
+    {
+      "id": "level-37",
+      "name": "Sublimity",
+      "class": "Class 3",
+      "risk": "High",
+      "description": "A vast pool complex where familiar architecture gives way to something watching from below.",
+      "status": "Restricted"
+    }
   ],
   "entities": [
-    {"id":"entity-3","name":"The Hound","threat":"High","description":"A fast, hostile entity that imitates human movement."},
-    {"id":"entity-8","name":"The Smiler","threat":"Critical","description":"A face visible only in darkness."}
+    {
+      "id": "entity-3",
+      "name": "The Hound",
+      "threat": "High",
+      "description": "A fast, hostile entity that imitates human movement before revealing its true form.",
+      "advice": "Do not run in a straight line. Break line of sight and stay quiet."
+    },
+    {
+      "id": "entity-8",
+      "name": "The Smiler",
+      "threat": "Critical",
+      "description": "A face visible only in darkness. Its smile is the last warning most explorers receive.",
+      "advice": "Keep your light steady and never stare directly at it."
+    }
   ],
   "documents": [
-    {"id":"doc-001","title":"Field Note 001: Entry","classification":"Archive","excerpt":"If you find this, you have already left the world you knew."},
-    {"id":"doc-002","title":"Incident Report: Yellow Hall","classification":"Restricted","excerpt":"The lights went out for eleven seconds. When they returned, the corridor had changed."}
+    {
+      "id": "doc-001",
+      "title": "Field Note 001: Entry",
+      "classification": "ARCHIVE",
+      "excerpt": "If you find this, you have already left the world you knew. Keep moving."
+    },
+    {
+      "id": "doc-002",
+      "title": "Incident Report: Yellow Hall",
+      "classification": "RESTRICTED",
+      "excerpt": "The lights went out for eleven seconds. When they returned, the corridor had changed."
+    }
   ]
 }
